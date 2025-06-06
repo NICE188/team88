@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecting...</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    img.logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.imgur.com/kTovFG6.png" alt="Logo" class="logo" />
+  <h2>Redirecting to our official site...</h2>
+  <p class="countdown">Redirecting in <span id="timer">5</span> seconds</p>
+
+  <script>
+    let time = 5;
+    const timer = document.getElementById("timer");
+    const redirectUrl = "https://t.me/yourchannel"; // ✅ 改这里！
+
+    const countdown = setInterval(() => {
+      time--;
+      timer.textContent = time;
+      if (time === 0) {
+        clearInterval(countdown);
+        window.location.href = redirectUrl;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
