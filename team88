@@ -3,52 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redirecting...</title>
+  <title>Welcome to SonicAU</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: #000;
-      color: white;
-      font-family: Arial, sans-serif;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    .container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100%;
+      padding: 20px;
       text-align: center;
+      background-color: rgba(0, 0, 0, 0.6);
     }
-
-    img.logo {
-      width: 180px;
-      height: auto;
-      margin-bottom: 20px;
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
     }
-
-    .countdown {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      color: #ffd700;
+    p {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: block;
+      background: #1E90FF;
+      color: white;
+      padding: 15px;
+      margin: 10px auto;
+      width: 90%;
+      max-width: 320px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 17px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #006ad9;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <img src="https://i.imgur.com/kTovFG6.png" alt="Logo" class="logo" />
-  <h2>Redirecting to our official site...</h2>
-  <p class="countdown">Redirecting in <span id="timer">5</span> seconds</p>
+<canvas id="starfield"></canvas>
+<div class="container">
+  <h1>🎰 欢迎来到 SonicAU</h1>
+  <p>精选优惠 · 澳洲本地平台 · 极速到账</p>
 
-  <script>
-    let time = 5;
-    const timer = document.getElementById("timer");
-    const redirectUrl = "https://t.me/yourchannel"; // ✅ 改这里！
+  <a href="https://sonicau.com/signup" class="btn">🔰 注册领取新人优惠</a>
+  <a href="https://t.me/sonicau_group" class="btn">💬 加入 Telegram 社群</a>
+  <a href="https://sonicau.com/deposit" class="btn">💸 存款入口</a>
+  <a href="https://sonicau.com/support" class="btn">🛎 联系客服</a>
 
-    const countdown = setInterval(() => {
-      time--;
-      timer.textContent = time;
-      if (time === 0) {
-        clearInterval(countdown);
-        window.location.href = redirectUrl;
+  <footer>
+    &copy; 2025 SonicAU | All rights reserved.
+  </footer>
+</div>
+
+<script>
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+
+  let stars = [], count = 200;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        d: Math.random() * 0.5 + 0.05
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff";
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    move();
+    requestAnimationFrame(draw);
+  }
+
+  function move() {
+    stars.forEach(s => {
+      s.y += s.d;
+      if (s.y > canvas.height) {
+        s.y = 0;
+        s.x = Math.random() * canvas.width;
       }
-    }, 1000);
-  </script>
+    });
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+</script>
 </body>
 </html>
